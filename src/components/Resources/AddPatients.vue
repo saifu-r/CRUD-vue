@@ -123,6 +123,10 @@ export default defineComponent({
           disease: enteredDisease.value,
         }
       );
+      enteredName.value=''
+      enteredAge.value= null
+      enteredGender.value= ''
+      enteredDisease.value= []
     };
 
     return {

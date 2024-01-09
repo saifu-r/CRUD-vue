@@ -1,6 +1,6 @@
 <template>
   <base-card>
-    <base-button @click="showDetails">Load Details</base-button>
+    <base-button mode="flat" @click="showDetails">Load Details</base-button>
     <div class="name">
 
         <ul v-for="patient in patients" :key="patient.id">
@@ -11,7 +11,7 @@
                 <li><strong>Disease: </strong><small v-for="(disease,index) in patient.disease" :key="disease">{{index+1 +') '+disease +' '}}</small></li>
             </div>
             <div class="delete-button">
-                <base-button>Delete</base-button>
+                <base-button @click="deletePatient(patient.id)">Delete</base-button>
             </div>
         </ul>
      
@@ -50,11 +50,23 @@ export default defineComponent({
       }
     };
 
+    const deletePatient=async(key: string)=>{
+        // console.log(key);
+        try{
+            const response= await axios.delete(`https://vue-crud-cdad1-default-rtdb.firebaseio.com/patients/${key}.json`)
+            console.log('Item deleted successfully:', response.data);
+            showDetails()
+        }catch(error){
+            console.error('Error deleting item:', error);
+        }
+        
+    }
+
     onMounted(() => {
       showDetails();
     });
 
-    return { showDetails, patients };
+    return { showDetails, patients, deletePatient };
   },
 });
 </script>
