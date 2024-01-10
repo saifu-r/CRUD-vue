@@ -117,7 +117,7 @@
 
     <template #actions>
       <base-button mode="flat" @click="confirmError">Close</base-button>
-      <base-button mode="flat" @click="confirmError">Save</base-button>
+      <base-button mode="flat" @click="updateData">Save</base-button>
     </template>
   </base-dialog>
   <base-card>
@@ -211,20 +211,15 @@ export default defineComponent({
       updatedGender.value = (event.target as HTMLInputElement).value;
       // console.log(patients);
     };
+
     const updatedDisease = ref<Disease[]>([]);
     const editedDisease = (event: Event) => {
-      const checkboxValue = (event.target as HTMLInputElement).value as Disease;
+      const updatedDisease = (event.target as HTMLInputElement).value as Disease;
 
-      // Toggle the checkbox value in the array
-      if (updatedDisease.value.includes(checkboxValue)) {
-        updatedDisease.value = updatedDisease.value.filter(
-          (disease) => disease !== checkboxValue
-        );
-      } else {
-        updatedDisease.value = [...updatedDisease.value, checkboxValue];
-      }
 
-      console.log(updatedDisease.value);
+      
+
+      // console.log(updatedDisease.value);
     };
 
     const patientIdTest = ref("");
@@ -233,19 +228,30 @@ export default defineComponent({
     const openDialog = async (key: string) => {
       openEditDialog.value = true;
       patientIdTest.value = key;
-      try {
+      if(isToUpdate.value===true){
+        try {
         const response = await axios.put(
-          `https://vue-crud-cdad1-default-rtdb.firebaseio.com/patients/${key}.json`
+          `https://vue-crud-cdad1-default-rtdb.firebaseio.com/patients.json`, patients.value
         );
         showDetails();
-      } catch (error) {
-        console.error("Error updating patient:", error);
+        } catch (error) {
+          console.error("Error updating patient:", error);
+        }
+        isToUpdate.value= false
       }
+
+      
     };
 
     const confirmError = () => {
       openEditDialog.value = false;
     };
+    const isToUpdate= ref(false)
+    const updateData= ()=>{
+      isToUpdate.value= true
+      console.log('Name: ' + updatedName.value + ' Age:'+ updatedAge.value + ' Gender:'+ updatedGender.value + ' Disease:'+ updatedDisease.value) ;
+      
+    }
 
     onMounted(() => {
       showDetails();
@@ -263,6 +269,7 @@ export default defineComponent({
       editedAge,
       editedGender,
       editedDisease,
+      updateData
     };
   },
 });
