@@ -14,6 +14,7 @@
           class="age"
           min="1"
           max="100"
+          value="5"
           v-model="enteredAge"
         />
       </div>

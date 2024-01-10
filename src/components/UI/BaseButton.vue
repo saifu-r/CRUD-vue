@@ -6,7 +6,16 @@
 
 <script>
 export default {
-    props: ['type','mode']
+    props:{
+      type:{
+        type: String,
+        required: false,
+      },
+      mode:{
+        type: String,
+        required: false,
+      }
+    }
 }
 </script>
 

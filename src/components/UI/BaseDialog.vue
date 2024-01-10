@@ -6,6 +6,9 @@
           <h2>{{ title }}</h2>
         </slot>
       </header>
+      <h4><slot name="id">
+        {{ id }}
+      </slot></h4>
       <section>
         <slot></slot>
       </section>
@@ -23,6 +26,10 @@
         type: String,
         required: false,
       },
+      id:{
+        type: String,
+        required: false,
+      }
     },
     setup(props, {emit}){
       const closeDialog= ()=>{
