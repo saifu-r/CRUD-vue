@@ -11,6 +11,7 @@
 import { defineComponent } from 'vue';
 import ToggleComponents from './components/Resources/ToggleComponents.vue';
 
+
 export default defineComponent({
   name: 'App',
   components: {ToggleComponents}
@@ -18,9 +19,13 @@ export default defineComponent({
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+
 
 body{
   margin: 0;
+  font-family: 'Inter', sans-serif;
 }
 
 header {
